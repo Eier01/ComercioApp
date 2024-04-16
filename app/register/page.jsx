@@ -100,6 +100,7 @@ function Register() {
                                             controlItem.componentType ==
                                             "input" ? (
                                                 <InputComponent
+                                                    key={controlItem.id}
                                                     type={controlItem.type}
                                                     placeholder={
                                                         controlItem.placeholder
@@ -114,8 +115,9 @@ function Register() {
                                                     value={formData[controlItem.id]}
                                                 />
                                             ) : controlItem.componentType ==
-                                              "select" ? (
+                                            "select" ? (
                                                 <SelectComponent
+                                                key={controlItem.id}
                                                     options={
                                                         controlItem.options
                                                     }

@@ -106,7 +106,7 @@ export default function Page() {
 
     useEffect(() => {
         if (user !== null) extractAllAddresses();
-    }, [user]);
+    }, []);
 
     return (
         <section>
@@ -220,6 +220,7 @@ export default function Page() {
                                     {addNewAddressFormControls.map(
                                         (controlItem) => (
                                             <InputComponent
+                                                key={addNewAddressFormControls.id}
                                                 type={controlItem.type}
                                                 placeholder={
                                                     controlItem.placeholder

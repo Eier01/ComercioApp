@@ -84,6 +84,7 @@ function Login() {
                             <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
                                 {loginFormControls.map((controlItem) => (
                                     <InputComponent
+                                        key={controlItem.id}
                                         type={controlItem.type}
                                         placeholder={controlItem.placeholder}
                                         label={controlItem.label}
