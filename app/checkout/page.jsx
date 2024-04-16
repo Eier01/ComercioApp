@@ -16,9 +16,9 @@ export default function Checkout() {
     const [selectedAddress, setselectedAddress] = useState(null)
     const [isOrderProcessing, setIsOrderProcessing] = useState(false)
     const [orderSuccess, setOrderSuccess] = useState(false)
-    const [params, setParams] = useState(null);
 
     const router = useRouter()    
+    const params = useSearchParams();
 
     async function extractAllAddress() {
         const res = await getAllAddress(user.id);
@@ -88,10 +88,6 @@ export default function Checkout() {
         if (user !== null) extractAllAddress();
     }, [user,extractAllAddress]);
 
-    useEffect(() => {
-        const params = useSearchParams();
-        setParams(params);
-    }, []);
 
     useEffect(() => {
         async function createFinalOrder(){
