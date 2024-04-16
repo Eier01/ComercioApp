@@ -96,11 +96,11 @@ function Register() {
                             ) : (
                                 <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
                                     {registrationFormControls.map(
-                                        (controlItem) =>
+                                        (controlItem,index) =>
                                             controlItem.componentType ==
                                             "input" ? (
                                                 <InputComponent
-                                                    key={controlItem.id}
+                                                    key={index}
                                                     type={controlItem.type}
                                                     placeholder={
                                                         controlItem.placeholder
@@ -117,7 +117,7 @@ function Register() {
                                             ) : controlItem.componentType ==
                                             "select" ? (
                                                 <SelectComponent
-                                                key={controlItem.id}
+                                                    key={index}
                                                     options={
                                                         controlItem.options
                                                     }

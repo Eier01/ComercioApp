@@ -16,9 +16,9 @@ export default function Checkout() {
     const [selectedAddress, setselectedAddress] = useState(null)
     const [isOrderProcessing, setIsOrderProcessing] = useState(false)
     const [orderSuccess, setOrderSuccess] = useState(false)
+    const [params, setParams] = useState(null);
 
-    const router = useRouter()
-    const params = useSearchParams()
+    const router = useRouter()    
 
     async function extractAllAddress() {
         const res = await getAllAddress(user.id);
@@ -86,13 +86,18 @@ export default function Checkout() {
 
     useEffect(() => {
         if (user !== null) extractAllAddress();
-    }, [user]);
+    }, [user,extractAllAddress]);
+
+    useEffect(() => {
+        const params = useSearchParams();
+        setParams(params);
+    }, []);
 
     useEffect(() => {
         async function createFinalOrder(){
             const isStripe = JSON.parse(localStorage.getItem('stripe'))
 
-            if(isStripe && params.get('status') === 'success' && cartItems && cartItems.length >0){
+            if(isStripe && params?.get('status') === 'success' && cartItems && cartItems.length >0){
                 setIsOrderProcessing(true)
                 const getCheckoutFormData = JSON.parse(localStorage.getItem('checkoutFormData'))
 
@@ -133,7 +138,7 @@ export default function Checkout() {
 
         createFinalOrder()
 
-    },[params.get('status'),cartItems]);
+    },[params?.get('status'),cartItems]);
 
     useEffect(() =>{
         if(orderSuccess){

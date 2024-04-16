@@ -165,10 +165,10 @@ function AdminAddNewProduct() {
                             onClick={handleTileClick}
                         />
                     </div>
-                    {adminAddProductformControls.map((controlItem) =>
+                    {adminAddProductformControls.map((controlItem,index) =>
                         controlItem.componentType === "input" ? (
                             <InputComponent
-                                key={controlItem.id}
+                                key={index}
                                 type={controlItem.type}
                                 placeholder={controlItem.placeholder}
                                 label={controlItem.label}
@@ -182,7 +182,7 @@ function AdminAddNewProduct() {
                             />
                         ) : controlItem.componentType === "select" ? (
                             <SelectComponent
-                                key={controlItem.id}                            
+                                key={index}                            
                                 label={controlItem.label}
                                 options={controlItem.options}
                                 value={formData[controlItem.id]}

@@ -82,9 +82,9 @@ function Login() {
                                 Iniciar Sesion
                             </p>
                             <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
-                                {loginFormControls.map((controlItem) => (
+                                {loginFormControls.map((controlItem,index) => (
                                     <InputComponent
-                                        key={controlItem.id}
+                                        key={index}
                                         type={controlItem.type}
                                         placeholder={controlItem.placeholder}
                                         label={controlItem.label}

@@ -106,7 +106,7 @@ export default function Page() {
 
     useEffect(() => {
         if (user !== null) extractAllAddresses();
-    }, []);
+    }, [user, extractAllAddresses]);
 
     return (
         <section>
@@ -218,9 +218,9 @@ export default function Page() {
                             <div className="flex flex-col mt-5 justify-center pt-4 items-center">
                                 <div className="w-full mt-6 mr-0 mb-0 ml-0 space-y-8">
                                     {addNewAddressFormControls.map(
-                                        (controlItem) => (
+                                        (controlItem,index) => (
                                             <InputComponent
-                                                key={addNewAddressFormControls.id}
+                                                key={index}
                                                 type={controlItem.type}
                                                 placeholder={
                                                     controlItem.placeholder
