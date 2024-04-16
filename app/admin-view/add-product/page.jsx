@@ -2,6 +2,8 @@
 import InputComponent from "@/app/components/FormElements/InputComponent/InputComponent";
 import SelectComponent from "@/app/components/FormElements/SelectComponent/SelectComponent";
 import TileComponent from "@/app/components/FormElements/TileComponent/TileComponent";
+import { v4 as uuidv4 } from 'uuid';
+
 import {
     adminAddProductformControls,
     AvailableSizes,
@@ -168,7 +170,7 @@ function AdminAddNewProduct() {
                     {adminAddProductformControls.map((controlItem,index) =>
                         controlItem.componentType === "input" ? (
                             <InputComponent
-                                key={index}
+                                key={uuidv4()}
                                 type={controlItem.type}
                                 placeholder={controlItem.placeholder}
                                 label={controlItem.label}
@@ -182,7 +184,7 @@ function AdminAddNewProduct() {
                             />
                         ) : controlItem.componentType === "select" ? (
                             <SelectComponent
-                                key={index}                            
+                                key={uuidv4()}                            
                                 label={controlItem.label}
                                 options={controlItem.options}
                                 value={formData[controlItem.id]}

@@ -145,10 +145,10 @@ export default function Page() {
                                 :(
                                     <div className="mt-4">
                                 {addresses && addresses.length ? (
-                                    addresses.map((item) => (
+                                    addresses.map((item,index) => (
                                         <div
                                             className="border p-6"
-                                            key={item._id}
+                                            key={index}
                                         >
                                             <p>Nombre: {item.fullName}</p>
                                             <p>Direccion: {item.address}</p>
