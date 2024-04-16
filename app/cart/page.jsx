@@ -7,7 +7,7 @@ import CommonCart from '../components/CommonCart/CommonCart'
 import { GlobalContext } from '../context';
 import { deleteFromCart, getAllCartItems } from '../services/cart/cart'
 
-export default function page() {
+export default function Page() {
     const { 
         user,cartItems,setCartItems, 
         pageLevelLoader, setPageLevelLoader,

@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-export default function page() {
+export default function Page() {
     return (
         <section className="h-screen bg-gray-200">
                 <div className="mx-auto px-4 sm:px-6 lg:px-8">

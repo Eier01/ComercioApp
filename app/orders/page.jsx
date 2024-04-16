@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { GlobalContext } from '../context';
 import { getAllOrdersForUser } from '../services/order/orderService';
 
-export default function page() {
+export default function Page() {
     const {user, pageLevelLoader, setPageLevelLoader,allOrdersForUser, setAllOrdersForUser} = useContext(GlobalContext)
 
     const router = useRouter()

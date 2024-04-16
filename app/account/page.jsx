@@ -14,7 +14,7 @@ import {
 } from "../services/address/serviceAddress";
 import { addNewAddressFormControls } from "../utils";
 
-export default function page() {
+export default function Page() {
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [currentEditedAddressId, setCurrentEditedAddressId] = useState(null);
 
