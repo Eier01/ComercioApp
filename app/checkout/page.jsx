@@ -95,58 +95,58 @@ export default function Checkout() {
     }, [user,extractAllAddress]);
 
 
-    useEffect(() => {
-        async function createFinalOrder(){
-            const isStripe = JSON.parse(localStorage.getItem('stripe'))
+    // useEffect(() => {
+    //     async function createFinalOrder(){
+    //         const isStripe = JSON.parse(localStorage.getItem('stripe'))
 
-            // Verificar si estamos en el cliente
-            if (typeof window !== 'undefined') {
-                const status = params?.get('status')
+    //         // Verificar si estamos en el cliente
+    //         if (typeof window !== 'undefined') {
+    //             const status = params?.get('status')
 
-                if(isStripe && status === 'success' && cartItems && cartItems.length >0){
-                    setIsOrderProcessing(true)
-                    const getCheckoutFormData = JSON.parse(localStorage.getItem('checkoutFormData'))
+    //             if(isStripe && status === 'success' && cartItems && cartItems.length >0){
+    //                 setIsOrderProcessing(true)
+    //                 const getCheckoutFormData = JSON.parse(localStorage.getItem('checkoutFormData'))
     
-                    const createFinalCheckoutFormData = {
-                        user: user?.id,
-                        shippingAddress: getCheckoutFormData.shippingAddress,
-                        orderItems: cartItems.map((item) => ({
-                            qty:1,
-                            product:item.productID._id
-                        })),
-                        paymentMethod: 'Stripe',
-                        totalPrice: cartItems.reduce((total,item) => item.productID.price + total,0),
-                        isPaid: true,
-                        paidAt: new Date(),
-                        isProcessing:true,
-                    }
+    //                 const createFinalCheckoutFormData = {
+    //                     user: user?.id,
+    //                     shippingAddress: getCheckoutFormData.shippingAddress,
+    //                     orderItems: cartItems.map((item) => ({
+    //                         qty:1,
+    //                         product:item.productID._id
+    //                     })),
+    //                     paymentMethod: 'Stripe',
+    //                     totalPrice: cartItems.reduce((total,item) => item.productID.price + total,0),
+    //                     isPaid: true,
+    //                     paidAt: new Date(),
+    //                     isProcessing:true,
+    //                 }
     
-                    const res = await createNewOrder(createFinalCheckoutFormData)
+    //                 const res = await createNewOrder(createFinalCheckoutFormData)
     
-                    if(res.success){
-                        setIsOrderProcessing(false)
-                        setOrderSuccess(true)
-                        toast.success(res.message)
-                        setCartItems([])
-                        localStorage.removeItem('stripe')
-                        localStorage.removeItem('checkoutFormData')
-                        localStorage.removeItem('cartItems')
+    //                 if(res.success){
+    //                     setIsOrderProcessing(false)
+    //                     setOrderSuccess(true)
+    //                     toast.success(res.message)
+    //                     setCartItems([])
+    //                     localStorage.removeItem('stripe')
+    //                     localStorage.removeItem('checkoutFormData')
+    //                     localStorage.removeItem('cartItems')
                         
-                    }else{
-                        setIsOrderProcessing(false)
-                        setOrderSuccess(false)
-                        toast.error(res.message)
-                        localStorage.removeItem('stripe')
-                        localStorage.removeItem('checkoutFormData')
-                    }
-                }
-            }
+    //                 }else{
+    //                     setIsOrderProcessing(false)
+    //                     setOrderSuccess(false)
+    //                     toast.error(res.message)
+    //                     localStorage.removeItem('stripe')
+    //                     localStorage.removeItem('checkoutFormData')
+    //                 }
+    //             }
+    //         }
             
-        }
+    //     }
 
-        createFinalOrder()
+    //     createFinalOrder()
 
-    },[params?.get('status'),cartItems]);
+    // },[params?.get('status'),cartItems]);
 
     useEffect(() =>{
         if(orderSuccess){
