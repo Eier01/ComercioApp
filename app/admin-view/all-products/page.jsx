@@ -5,6 +5,7 @@ import React from 'react'
 async function AdminView() {
     const allAdminProducts= await getAllAdminProducts()
 
+
     return (
         <div>
             <CommonListing data={allAdminProducts && allAdminProducts.data}/>

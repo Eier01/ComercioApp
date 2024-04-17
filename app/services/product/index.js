@@ -1,6 +1,8 @@
 import { async } from "@firebase/util"
 import Cookies from "js-cookie"
 
+
+
 export const addNewProduct = async(formData) =>{
     try{
         const response = await fetch('/api/admin/add-product',{
@@ -21,9 +23,13 @@ export const addNewProduct = async(formData) =>{
     }
 }
 
-export const getAllAdminProducts = async () =>{
+export const getAllAdminProducts = async (url) =>{    
     try{
-        const res = await fetch('http://localhost:3000/api/admin/all-products',{
+        if(url === undefined){
+            url = process.env.BASE_URL
+        }
+
+        const res = await fetch(`${url}/api/admin/all-products`,{
             method: 'GET',
             cache: 'no-store'
         })
@@ -76,7 +82,7 @@ export const deleteAProduct = async (id) =>{
 
 export const productByCategory = async(id) =>{
     try{
-        const res = await fetch(`http://localhost:3000/api/client/product-by-category?id=${id}`,{
+        const res = await fetch(`${process.env.BASE_URL}/api/client/product-by-category?id=${id}`,{
             method:'GET',
             cache: 'no-store'
         })
@@ -92,7 +98,7 @@ export const productByCategory = async(id) =>{
 
 export const productById = async(id) =>{
     try{
-        const res = await fetch(`http://localhost:3000/api/client/product-by-id?id=${id}`,{
+        const res = await fetch(`${process.env.BASE_URL}/api/client/product-by-id?id=${id}`,{
             method:'GET',
             cache: 'no-store'
         })

@@ -5,6 +5,7 @@ import ProductBusttons from './ProductBusttons/ProductBusttons'
 import ProductTile from './ProductTile/ProductTile'
 
 
+
 function CommonListing({data}) {
     const router = useRouter()
     //esto lo hace una sola vez cunado renderiza toda la aplicacion
