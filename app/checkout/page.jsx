@@ -9,7 +9,6 @@ import { GlobalContext } from "../context";
 import { getAllAddress } from "../services/address/serviceAddress";
 import { createNewOrder } from "../services/order/orderService";
 import { callStripeSession } from "../services/stripe/stripe";
-import { Suspense } from 'react';
 
 export default function Checkout() {
     const { user, cartItems, setCartItems, addresses, setAddresses, checkoutFormData, setCheckoutFormData } = useContext(GlobalContext);
@@ -159,8 +158,7 @@ export default function Checkout() {
 
     if(orderSuccess){
         return(
-            <Suspense fallback={<div>Loading...</div>}>
-                <section className="h-screen bg-gray-200">
+            <section className="h-screen bg-gray-200">
                     <div className="mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="mx-auto mt-8 max-w-screen-xl px-4 sm:px-6 lg:px-8">
                             <div className="bg-white shadow">
@@ -181,7 +179,6 @@ export default function Checkout() {
                         </div>
                     </div>
                 </section>
-            </Suspense>            
         )
     }
 
