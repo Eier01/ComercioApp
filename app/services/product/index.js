@@ -34,6 +34,11 @@ export const getAllAdminProducts = async (url) =>{
             cache: 'no-store'
         })
 
+        if (!res.success) {
+            // Si la respuesta no es exitosa, lanzar un error
+            throw new Error(`Error al obtener los productos: ${res.message}`);
+        }
+
         const data = await res.json()
 
         return data

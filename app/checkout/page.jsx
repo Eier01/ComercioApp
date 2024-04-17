@@ -1,7 +1,8 @@
 "use client";
 
 import { loadStripe } from "@stripe/stripe-js";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 import { useContext, useEffect,useState } from "react";
 import { SyncLoader } from "react-spinners";
 import { toast } from "react-toastify";
@@ -18,7 +19,7 @@ export default function Checkout() {
     const [orderSuccess, setOrderSuccess] = useState(false)
 
     const router = useRouter()    
-    const params = useSearchParams();
+    // const params = useSearchParams();
 
     async function extractAllAddress() {
         const res = await getAllAddress(user.id);
