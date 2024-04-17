@@ -72,14 +72,20 @@ export default function Checkout() {
         }))
 
         const res = await callStripeSession(createLineItems)
-        
-        setIsOrderProcessing(true)
-        localStorage.setItem('stripe', true);
-        localStorage.setItem('checkoutFormData', JSON.stringify(checkoutFormData));
 
-        const {error} = await stripe.redirectToCheckout({
-            sessionId: res.id
-        })
+        if(res.success){
+            setIsOrderProcessing(true)
+            localStorage.setItem('stripe', true);
+            localStorage.setItem('checkoutFormData', JSON.stringify(checkoutFormData));
+
+            const {error} = await stripe.redirectToCheckout({
+                sessionId: res.id
+            })
+        }else{
+            toast.error(res.message)
+        }
+        
+        
         
     }  
     
