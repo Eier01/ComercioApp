@@ -9,6 +9,7 @@ import { GlobalContext } from "../context";
 import { getAllAddress } from "../services/address/serviceAddress";
 import { createNewOrder } from "../services/order/orderService";
 import { callStripeSession } from "../services/stripe/stripe";
+import { Suspense } from 'react';
 
 export default function Checkout() {
     const { user, cartItems, setCartItems, addresses, setAddresses, checkoutFormData, setCheckoutFormData } = useContext(GlobalContext);
@@ -99,43 +100,49 @@ export default function Checkout() {
         async function createFinalOrder(){
             const isStripe = JSON.parse(localStorage.getItem('stripe'))
 
-            if(isStripe && params?.get('status') === 'success' && cartItems && cartItems.length >0){
-                setIsOrderProcessing(true)
-                const getCheckoutFormData = JSON.parse(localStorage.getItem('checkoutFormData'))
+            // Verificar si estamos en el cliente
+            if (typeof window !== 'undefined') {
+                const status = params?.get('status')
 
-                const createFinalCheckoutFormData = {
-                    user: user?.id,
-                    shippingAddress: getCheckoutFormData.shippingAddress,
-                    orderItems: cartItems.map((item) => ({
-                        qty:1,
-                        product:item.productID._id
-                    })),
-                    paymentMethod: 'Stripe',
-                    totalPrice: cartItems.reduce((total,item) => item.productID.price + total,0),
-                    isPaid: true,
-                    paidAt: new Date(),
-                    isProcessing:true,
-                }
-
-                const res = await createNewOrder(createFinalCheckoutFormData)
-
-                if(res.success){
-                    setIsOrderProcessing(false)
-                    setOrderSuccess(true)
-                    toast.success(res.message)
-                    setCartItems([])
-                    localStorage.removeItem('stripe')
-                    localStorage.removeItem('checkoutFormData')
-                    localStorage.removeItem('cartItems')
-                    
-                }else{
-                    setIsOrderProcessing(false)
-                    setOrderSuccess(false)
-                    toast.error(res.message)
-                    localStorage.removeItem('stripe')
-                    localStorage.removeItem('checkoutFormData')
+                if(isStripe && status === 'success' && cartItems && cartItems.length >0){
+                    setIsOrderProcessing(true)
+                    const getCheckoutFormData = JSON.parse(localStorage.getItem('checkoutFormData'))
+    
+                    const createFinalCheckoutFormData = {
+                        user: user?.id,
+                        shippingAddress: getCheckoutFormData.shippingAddress,
+                        orderItems: cartItems.map((item) => ({
+                            qty:1,
+                            product:item.productID._id
+                        })),
+                        paymentMethod: 'Stripe',
+                        totalPrice: cartItems.reduce((total,item) => item.productID.price + total,0),
+                        isPaid: true,
+                        paidAt: new Date(),
+                        isProcessing:true,
+                    }
+    
+                    const res = await createNewOrder(createFinalCheckoutFormData)
+    
+                    if(res.success){
+                        setIsOrderProcessing(false)
+                        setOrderSuccess(true)
+                        toast.success(res.message)
+                        setCartItems([])
+                        localStorage.removeItem('stripe')
+                        localStorage.removeItem('checkoutFormData')
+                        localStorage.removeItem('cartItems')
+                        
+                    }else{
+                        setIsOrderProcessing(false)
+                        setOrderSuccess(false)
+                        toast.error(res.message)
+                        localStorage.removeItem('stripe')
+                        localStorage.removeItem('checkoutFormData')
+                    }
                 }
             }
+            
         }
 
         createFinalOrder()
@@ -152,27 +159,29 @@ export default function Checkout() {
 
     if(orderSuccess){
         return(
-            <section className="h-screen bg-gray-200">
-                <div className="mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mx-auto mt-8 max-w-screen-xl px-4 sm:px-6 lg:px-8">
-                        <div className="bg-white shadow">
-                            <div className="px-4 py-6 sm:px-8 sm:py-10 flex flex-col gap-5">
-                                <h1 className="font-bold text-xl">
-                                    Tu pago fue echo exitosamente y en 3 segundos seras redirigido a la pagina donde veras tu pedido! 
-                                </h1>
-                                <button                               
-                                    className="mt-5 mr-2 w-full inline-block bg-black text-white px-5 py-3
-                                        text-xs font-medium uppercase tracking-wide
-                                    "
-                                    onClick={() => router.push('/orders')}
-                                >
-                                Ver tus pedidos
-                            </button>
+            <Suspense fallback={<div>Loading...</div>}>
+                <section className="h-screen bg-gray-200">
+                    <div className="mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="mx-auto mt-8 max-w-screen-xl px-4 sm:px-6 lg:px-8">
+                            <div className="bg-white shadow">
+                                <div className="px-4 py-6 sm:px-8 sm:py-10 flex flex-col gap-5">
+                                    <h1 className="font-bold text-xl">
+                                        Tu pago fue echo exitosamente y en 3 segundos seras redirigido a la pagina donde veras tu pedido! 
+                                    </h1>
+                                    <button                               
+                                        className="mt-5 mr-2 w-full inline-block bg-black text-white px-5 py-3
+                                            text-xs font-medium uppercase tracking-wide
+                                        "
+                                        onClick={() => router.push('/orders')}
+                                    >
+                                    Ver tus pedidos
+                                </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </Suspense>            
         )
     }
 
